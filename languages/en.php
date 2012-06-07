@@ -2,12 +2,11 @@
 
 $english = array(
     'au_analytics' => "AU Analytics",
-    
-    
-    // admin menu strings
-    'menu:page:header:au_analytics:statistics' => "Statistics",
-    'admin:au_analytics' => "AU Analytics",
-    'admin:au_analytics:timeline' => "Timelines",
+    'au_analytics:label:subtypes' => "Subtypes",
+    'au_analytics:label:time_lower' => "Start Time",
+    'au_analytics:label:time_upper' => "End Time",
+    'au_analytics:label:types' => "Entity Types",
+    'au_analytics:timeline' => "AU Timeline",
 );
 					
 add_translation("en",$english);

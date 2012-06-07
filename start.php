@@ -5,11 +5,50 @@
  * theme.
  */
 
+// include our procedural functions
+require_once 'lib/functions.php';
 
 // plugin init
 function au_analytics_init(){
   
-  elgg_register_admin_menu_item('administer',	'timeline', 'statistics', 0);
+  // set up css
+	elgg_extend_view('css/elgg', 'au_analytics/css');
+	elgg_register_css('au_analytics/jqplot', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/jquery.jqplot.min.css');
+	
+	
+	// Register our javascript
+	elgg_register_js('au_analytics/jqplot/canvas', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/excanvas.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/jquery.jqplot.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/highlighter', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.highlighter.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/cursor', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.cursor.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/dateaxis', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.dateAxisRenderer.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/barRender', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.barRenderer.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/categoryAxis', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/pointLabels', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.pointLabels.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/canvasAxisLabel', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js', 'head');
+	elgg_register_js('au_analytics/jqplot/canvasText', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.canvasTextRenderer.min.js', 'head');
+
+  
+  if(elgg_is_admin_logged_in() && (elgg_get_context() == 'admin' || elgg_get_context() == 'au_analytics')){
+    $section = '';
+    $parent = '';
+    if(elgg_get_context() == 'admin'){
+      $section = 'administer';
+      $parent = 'statistics';
+    }
+    
+    $url = elgg_get_site_url() . "au_analytics/timeline";
+      
+    
+     elgg_register_menu_item('page', array(
+         'name' => 'au_analytics_timeline',
+         'href' => $url,
+         'text' => elgg_echo('au_analytics:timeline'),
+         'parent_name' => $parent,
+         'section' => $section,
+         'priority' => 1000
+     ));
+  }
           
   // register page handler
   elgg_register_page_handler('au_analytics', 'au_analytics_page_handler');
@@ -30,12 +69,20 @@ function au_analytics_page_handler($page){
   return TRUE;
 }
 
+// returns bool based on whether the current browser is IE < 9
+function au_analytics_check_ie_pre9(){
+  $match=preg_match('/MSIE ([0-9]\.[0-9])/',$_SERVER['HTTP_USER_AGENT'],$reg);
+  if($match==0){
+    return FALSE;
+  }
+
+  $version = floatval($reg[1]);
+  
+  if($reg[1] < 9){
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
 elgg_register_event_handler('init', 'system', 'au_analytics_init');
-
-
-
-
-
-
-
-
