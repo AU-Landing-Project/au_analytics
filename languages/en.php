@@ -27,7 +27,7 @@ $english = array(
     'au_analytics:option:group_results:true' => "Group all results into a single combined line",
     'au_analytics:no_results' => "No results for the selected options.",
     'au_analytics:timeline' => "AU Timeline",
-    'au_analytics:timestamp' => "Interval Start (timestamp)",
+    'au_analytics:timestamp' => "Interval Start",
     'au_analytics:type:subtype' => "Type:Subtype",
 );
 					
