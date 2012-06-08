@@ -24,6 +24,7 @@ $options['subtypes'] = get_input('subtypes');
 $options['owner_guids'] = get_input('members', NULL);
 $options['created_time_lower'] = get_input('created_time_lower', FALSE);
 $options['created_time_upper'] = get_input('created_time_upper', FALSE);
+$options['au_analytics_display'] = get_input('display', 'graph');
 
 $access = get_input('access', 'any');
 if($access != 'any'){
@@ -131,6 +132,43 @@ $graph .= "<br>" . elgg_echo('au_analytics:graph:instructions');
           
 
   $html .= $graph;
+}
+elseif($submit){
+  elgg_load_css('au_analytics/tablesorter');
+  elgg_load_js('au_analytics/tablesorter');
+  elgg_load_js('au_analytics/tablesorter/pager');
+  // output the table
+  
+  $data = au_analytics_get_timeline($options, $group, $cumulative, $interval);
+  
+  //format data into a table
+  
+  $html .= '<table id="au_analytics_timeline_table" class="tablesorter">';
+  $html .= '<thead><tr>';
+  $html .= '<th>' . elgg_echo('au_analytics:type:subtype') . '</th>';
+  $html .= '<th>' . elgg_echo('au_analytics:timestamp') . '</th>';
+  $html .= '<th>' . elgg_echo('au_analytics:result:count') . '</th>';
+  $html .= '</tr></thead>';
+  $html .= '<tbody>';
+  
+  foreach($data as $type_subtype => $values){
+    foreach($values as $timestamp => $num){
+      $html .= '<tr><td>' . $type_subtype . '</td>';
+      $html .= '<td>' . $timestamp . '</td>';
+      $html .= '<td>' . $num . '</td>';
+    }
+  }
+  
+  $html .= '</tbody></table>';
+  
+$html .= <<<HTML
+    <script>
+    \$(document).ready(function() { 
+        \$("#au_analytics_timeline_table").tablesorter({widthFixed: true, widgets: ['zebra']}); 
+    });
+</script>
+HTML;
+
 }
 
 $body = elgg_view_layout('one_sidebar', array('content' => $html));

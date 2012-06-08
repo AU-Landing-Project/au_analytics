@@ -18,6 +18,7 @@ $english = array(
     'au_analytics:label:time_lower' => "Start Time",
     'au_analytics:label:time_upper' => "End Time",
     'au_analytics:label:types' => "Entity Types",
+    'au_analytics:result:count' => "Count",
     'au_analytics:option:cumulative:true' => "Show cumulative values",
     'au_analytics:option:cumulative:false' => "Show change per time interval",
     'au_analytics:option:display:graph' => "Graph",
@@ -26,6 +27,8 @@ $english = array(
     'au_analytics:option:group_results:true' => "Group all results into a single combined line",
     'au_analytics:no_results' => "No results for the selected options.",
     'au_analytics:timeline' => "AU Timeline",
+    'au_analytics:timestamp' => "Interval Start (timestamp)",
+    'au_analytics:type:subtype' => "Type:Subtype",
 );
 					
 add_translation("en",$english);

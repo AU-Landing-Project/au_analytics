@@ -128,6 +128,12 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
     }
   }
   
+  //if we're outputting a table, we have all the info
+  if($options['au_analytics_display'] == 'data'){
+    return $lines;
+  }
+  
+  // continue on to format for the graph
   // format the line into javascript arrays
   $jsline = array(
       'titles' => "[",

@@ -14,6 +14,7 @@ function au_analytics_init(){
   // set up css
 	elgg_extend_view('css/elgg', 'au_analytics/css');
 	elgg_register_css('au_analytics/jqplot', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/jquery.jqplot.min.css');
+  elgg_register_css('au_analytics/tablesorter', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/style.css');
 	
 	
 	// Register our javascript
@@ -27,6 +28,8 @@ function au_analytics_init(){
 	elgg_register_js('au_analytics/jqplot/pointLabels', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.pointLabels.min.js', 'head');
 	elgg_register_js('au_analytics/jqplot/canvasAxisLabel', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js', 'head');
 	elgg_register_js('au_analytics/jqplot/canvasText', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/plugins/jqplot.canvasTextRenderer.min.js', 'head');
+  elgg_register_js('au_analytics/tablesorter', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/jquery.tablesorter.min.js', 'head');
+  elgg_register_js('au_analytics/tablesorter/pager', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/jquery.tablesorter.pager.js', 'head');
 
   
   if(elgg_is_admin_logged_in() && (elgg_get_context() == 'admin' || elgg_get_context() == 'au_analytics')){

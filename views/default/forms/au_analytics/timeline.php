@@ -142,4 +142,4 @@ echo '</div>';
 
 
 echo "<br><br>";
-echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit')));
+echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit'))) . "<br><br>";
