@@ -2,6 +2,7 @@
 
 $english = array(
     'au_analytics' => "AU Analytics",
+    'au_analytics:entities:total' => "All Entities",
     'au_analytics:label:subtypes' => "Subtypes",
     'au_analytics:label:time_lower' => "Start Time",
     'au_analytics:label:time_upper' => "End Time",

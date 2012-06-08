@@ -3,6 +3,7 @@
 $types_subtypes = get_registered_entity_types();
 
 $types = array_keys($types_subtypes);
+sort($types);
 
 // set up selection for types
 // elgg doesn't have multiple select yet
@@ -31,6 +32,7 @@ foreach($types_subtypes as $type => $subtypes_array){
   }
 }
 $subtypes = array_unique($subtypes);
+sort($subtypes);
 $value = get_input('subtypes', array());
 
 echo '<div class="au_analytics_formelement">';
@@ -54,10 +56,10 @@ $time_lowest = $result[0]->time_created;
 
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:time_lower') . "<br>";
-echo elgg_view('input/date', array('name' => 'time_lower', 'value' => get_input('time_lower', $time_lowest), 'timestamp' => TRUE, 'style' => 'width: 120px;')) . "<br><br>";
+echo elgg_view('input/date', array('name' => 'created_time_lower', 'value' => get_input('created_time_lower', $time_lowest), 'timestamp' => TRUE, 'style' => 'width: 120px;')) . "<br><br>";
 
 echo elgg_echo('au_analytics:label:time_upper') . "<br>";
-echo elgg_view('input/date', array('name' => 'time_upper', 'value' => get_input('time_upper', time()), 'timestamp' => TRUE, 'style' => 'width: 120px;'));
+echo elgg_view('input/date', array('name' => 'created_time_upper', 'value' => get_input('created_time_upper', time()), 'timestamp' => TRUE, 'style' => 'width: 120px;'));
 echo '</div>';
 
 echo "<br><br>";

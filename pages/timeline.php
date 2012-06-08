@@ -33,8 +33,8 @@ $cumulative = get_input('cumulative', TRUE);
 $options = array();
 $options['types'] = get_input('types');
 $options['subtypes'] = get_input('subtypes');
-$options['time_lower'] = get_input('time_lower');
-$options['time_upper'] = get_input('time_upper');
+$options['created_time_lower'] = get_input('created_time_lower', FALSE);
+$options['created_time_upper'] = get_input('created_time_upper', FALSE);
 
 // get entities by time asc
 $options['reverse_order_by'] = TRUE;
@@ -45,20 +45,17 @@ $options['callback'] = NULL;
 // get all results
 $options['limit'] = 0;
 
-//$html .= "<pre>" . print_r($options,1) . "</pre>";
 
-$entities = elgg_get_entities($options);
+$line = au_analytics_get_timeline($options, $group, $cumulative);
 
-$line = au_analytics_get_line($entities, $group, $cumulative);
+// debug: $html .= "<pre>" . print_r($line,1) . "</pre>";
 
-//$html .= "<pre>" . print_r($entities,1) . "</pre>";
-
-$html .= <<<END
+$graph = <<<END
 <script>
 $(document).ready(function(){
-	  var line1=[['1-Jan-2012', 54], ['2-Jan-2012', 37], ['3-Jan-2012', 55], ['5-Jan-2012', 44]];
-    var line2=[['1-Jan-2012', 34], ['2-Jan-2012', 47], ['3-Jan-2012', 52], ['5-Jan-2012', 49]];
-	  var plot1 = $.jqplot('au_analytics_timeline', [line1, line2], {
+	  //var line1=[['1-Jan-2012', 54], ['2-Jan-2012', 37], ['3-Jan-2012', 55], ['5-Jan-2012', 44]];
+    //var line2=[['1-Jan-2012', 34], ['2-Jan-2012', 47], ['3-Jan-2012', 52], ['5-Jan-2012', 49]];
+	  var plot1 = $.jqplot('au_analytics_timeline', {$line['data']}, {
 	    title:'Timeline',
 	    seriesDefaults: {
 	        show: true,
@@ -104,7 +101,7 @@ $(document).ready(function(){
 		      location: 'e',
 		      placement: 'outside',
 		      showLabels: true,
-		      labels: ['Mild','Moderate','Extreme']
+		      labels: {$line['titles']}
 		  }
 	  });
 	});
@@ -114,6 +111,10 @@ $(document).ready(function(){
 <div id="au_analytics_timeline" style="width:600px; height:400px;"></div>
 END;
 // set up selection for subtypes
+          
+if($options['created_time_lower'] !== FALSE && $options['created_time_upper'] !== FALSE){
+  $html .= $graph;
+}
 
 $body = elgg_view_layout('one_sidebar', array('content' => $html));
 
