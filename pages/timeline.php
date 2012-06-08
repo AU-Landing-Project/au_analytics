@@ -145,17 +145,17 @@ elseif($submit){
   
   $html .= '<table id="au_analytics_timeline_table" class="tablesorter">';
   $html .= '<thead><tr>';
-  $html .= '<th>' . elgg_echo('au_analytics:type:subtype') . '</th>';
   $html .= '<th>' . elgg_echo('au_analytics:timestamp') . '</th>';
+  $html .= '<th>' . elgg_echo('au_analytics:type:subtype') . '</th>';
   $html .= '<th>' . elgg_echo('au_analytics:result:count') . '</th>';
   $html .= '</tr></thead>';
   $html .= '<tbody>';
   
   foreach($data as $type_subtype => $values){
     foreach($values as $timestamp => $num){
-      $html .= '<tr><td>' . $type_subtype . '</td>';
-      $html .= '<td>' . $timestamp . '</td>';
-      $html .= '<td>' . $num . '</td>';
+      $html .= '<tr><td>' . date('Y-m-j', $timestamp) . '</td>';
+      $html .= '<td>' . $type_subtype . '</td>';
+      $html .= '<td>' . $num . '</td></tr>';
     }
   }
   
@@ -164,7 +164,7 @@ elseif($submit){
 $html .= <<<HTML
     <script>
     \$(document).ready(function() { 
-        \$("#au_analytics_timeline_table").tablesorter({widthFixed: true, widgets: ['zebra']}); 
+        \$("#au_analytics_timeline_table").tablesorter({widthFixed: true, widgets: ['zebra'], sortList: [[0, 0],[2,1]],}); 
     });
 </script>
 HTML;
