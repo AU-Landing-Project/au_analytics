@@ -25,7 +25,7 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
   // run our query first
   $entities = elgg_get_entities($options);
   
-  if(!$entities || !is_numeric($interval)){
+  if(!$entities || !is_numeric($interval) || $interval <= 0){
     // no results
     return FALSE;
   }
@@ -40,11 +40,11 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
   // iterate through the intervals
   $previous_time = NULL;
   $start = $options['created_time_lower'];
-  $stop = $options['created_time_upper'];
+  $stop = $options['created_time_upper'] + $time_section;
+  $x_values = array();
   
   for($i = $start; $i < $stop; $i += $time_section){
-
-    $time_lower = $i;
+    $x_values[] = $time_lower = $i;
     $time_upper = $i + $time_section;
     // iterate through our entities and build our array
     foreach($entities as $key => $entity){
@@ -53,7 +53,7 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
       
       // initialize line point with value of 0 or cumulative value, then we'll add to it
       if($group){
-        $line_name = 'au_analytics:entities:total';
+        $line_name = elgg_echo('au_analytics:entities:total');
       }
       else{
         $line_name = "{$type}:{$subtype}";
@@ -108,12 +108,32 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
     $previous_time = $i;
   }
   
+  // now we have all of our lines, though not all of them will extend to the end of the graph
+  // if an entity was counted and removed from the array, and there were no more to the end of the iterations
+  // so now we'll normalize them with our x values
+  foreach($lines as $name => $values){
+    $linex = array_keys($values);
+    
+    foreach($x_values as $x){
+      if(!in_array($x, $linex)){
+        // this line is missing this point
+        // so add it in either as 0 or as previous value
+        if($cumulative){
+          $lines[$name][$x] = end($lines[$name]);
+        }
+        else{
+          $lines[$name][$x] = 0;
+        }
+      }
+    }
+  }
+  
   // format the line into javascript arrays
   $jsline = array(
       'titles' => "[",
       'data' => "["
   );
-  
+  //echo "<pre>" . print_r($lines,1) . "</pre>";
   // iterate through our lines and insert title into form ['title1','title2','title3']
   // and data into [[['l1x', l1y],['l1x', l1y]],[['l2x', l2y],['l2x', l2y]]]
   $count = 0;

@@ -1,5 +1,7 @@
 <?php
 
+admin_gatekeeper();
+
 /*
  * Generates timeline graphs based on input parameters
  */
@@ -28,13 +30,22 @@ $html = elgg_view_form('au_analytics/timeline', array('action' => current_page_u
 // get our data formatting options
 $group = get_input('group', FALSE);
 $cumulative = get_input('cumulative', TRUE);
+$submit = get_input('submit', FALSE);
+$interval = (int) get_input('interval', 7);
 
 // format our options
 $options = array();
 $options['types'] = get_input('types');
 $options['subtypes'] = get_input('subtypes');
+$options['owner_guids'] = get_input('members', NULL);
 $options['created_time_lower'] = get_input('created_time_lower', FALSE);
 $options['created_time_upper'] = get_input('created_time_upper', FALSE);
+
+$access = get_input('access', 'any');
+if($access != 'any'){
+  $access = sanitize_int($access);
+  $options['wheres'] = array("e.access_id = {$access}");
+}
 
 // get entities by time asc
 $options['reverse_order_by'] = TRUE;
@@ -45,11 +56,14 @@ $options['callback'] = NULL;
 // get all results
 $options['limit'] = 0;
 
-
-$line = au_analytics_get_timeline($options, $group, $cumulative);
-
-// debug: $html .= "<pre>" . print_r($line,1) . "</pre>";
-
+if($submit){
+  $line = au_analytics_get_timeline($options, $group, $cumulative, $interval);
+  
+  $message = '';
+  if(!$line){
+    $message = elgg_echo('au_analytics:no_results');
+  }
+  
 $graph = <<<END
 <script>
 $(document).ready(function(){
@@ -108,11 +122,11 @@ $(document).ready(function(){
 </script>
 
 
-<div id="au_analytics_timeline" style="width:600px; height:400px;"></div>
+<div id="au_analytics_timeline" style="width:600px; height:400px;">{$message}</div>
 END;
 // set up selection for subtypes
           
-if($options['created_time_lower'] !== FALSE && $options['created_time_upper'] !== FALSE){
+
   $html .= $graph;
 }
 

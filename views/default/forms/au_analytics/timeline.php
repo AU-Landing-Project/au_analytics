@@ -1,5 +1,12 @@
 <?php
 
+// get all subtypes in the database, not just the public facing ones
+$result = get_data("SELECT subtype FROM " . elgg_get_config('dbprefix') . "entity_subtypes");
+$subtypes = array();
+foreach($result as $object){
+  $subtypes[] = $object->subtype;
+}
+
 $types_subtypes = get_registered_entity_types();
 
 $types = array_keys($types_subtypes);
@@ -22,17 +29,7 @@ echo '</select>';
 echo '</div>';
 
 
-// set up selection for subtypes
-$subtypes = array();
-foreach($types_subtypes as $type => $subtypes_array){
-  if(is_array($subtypes_array)){
-    foreach($subtypes_array as $subtype){
-      $subtypes[] = $subtype;
-    }
-  }
-}
-$subtypes = array_unique($subtypes);
-sort($subtypes);
+// setup selection for subtypes
 $value = get_input('subtypes', array());
 
 echo '<div class="au_analytics_formelement">';
@@ -61,6 +58,71 @@ echo elgg_view('input/date', array('name' => 'created_time_lower', 'value' => ge
 echo elgg_echo('au_analytics:label:time_upper') . "<br>";
 echo elgg_view('input/date', array('name' => 'created_time_upper', 'value' => get_input('created_time_upper', time()), 'timestamp' => TRUE, 'style' => 'width: 120px;'));
 echo '</div>';
+
+
+// sort by access
+$options = array(
+    'name' => 'access',
+    'value' => get_input('access', 'any'),
+    'options_values' => array(
+        'any' => elgg_echo('au_analytics:access:any'),
+        ACCESS_PRIVATE => elgg_echo('PRIVATE'),
+        ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
+        ACCESS_FRIENDS => elgg_echo('au_analytics:access:friends'),
+        ACCESS_PUBLIC => elgg_echo('PUBLIC')
+    )
+);
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:access') . "<br>";
+echo elgg_view('input/dropdown', $options);
+echo '</div>';
+
+
+// set up owner_guids
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:owner_guid') . "<br>";
+echo elgg_view('input/userpicker', array('name' => 'owner_guids', 'value' => get_input('members', array())));
+echo '</div>';
+
+
+// line display options
+$options = array(
+    'name' => 'group',
+    'value' => get_input('group', 0),
+    'options_values' => array(
+        TRUE => elgg_echo('au_analytics:option:group_results:true'),
+        FALSE => elgg_echo('au_analytics:option:group_results:false')
+    )
+);
+
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:group_results') . "<br>";
+echo elgg_view('input/dropdown', $options);
+echo '</div>';
+
+
+// data display options
+$options = array(
+    'name' => 'cumulative',
+    'value' => get_input('cumulative', TRUE),
+    'options_values' => array(
+        TRUE => elgg_echo('au_analytics:option:cumulative:true'),
+        FALSE => elgg_echo('au_analytics:option:cumulative:false')
+    )
+);
+
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:cumulative') . "<br>";
+echo elgg_view('input/dropdown', $options);
+echo '</div>';
+
+
+// setup sample interval
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:interval') . "<br>";
+echo elgg_view('input/text', array('name' => 'interval', 'value' => get_input('interval', 7), 'style' => 'width:150px'));
+echo '</div>';
+
 
 echo "<br><br>";
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit')));
