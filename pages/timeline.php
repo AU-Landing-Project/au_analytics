@@ -7,23 +7,6 @@ admin_gatekeeper();
  */
 
 
-// IE versions < 9 need special js
-if(au_analytics_check_ie_pre9()){
-  elgg_load_js('au_analytics/jqplot/canvas');
-}
-
-// get our css/js
-elgg_load_css('au_analytics/jqplot');
-elgg_load_js('au_analytics/jqplot');
-elgg_load_js('au_analytics/jqplot/highlighter');
-elgg_load_js('au_analytics/jqplot/cursor');
-elgg_load_js('au_analytics/jqplot/dateaxis');
-elgg_load_js('au_analytics/jqplot/barRender');
-elgg_load_js('au_analytics/jqplot/categoryAxis');
-elgg_load_js('au_analytics/jqplot/pointLabels');
-elgg_load_js('au_analytics/jqplot/canvasAxisLabel');
-elgg_load_js('au_analytics/jqplot/canvasText');
-
 // generate our form
 $html = elgg_view_form('au_analytics/timeline', array('action' => current_page_url()));
 
@@ -32,6 +15,7 @@ $group = get_input('group', FALSE);
 $cumulative = get_input('cumulative', TRUE);
 $submit = get_input('submit', FALSE);
 $interval = (int) get_input('interval', 7);
+$display = get_input('display');
 
 // format our options
 $options = array();
@@ -56,7 +40,25 @@ $options['callback'] = NULL;
 // get all results
 $options['limit'] = 0;
 
-if($submit){
+if($submit && $display == 'graph'){
+  
+  // IE versions < 9 need special js
+  if(au_analytics_check_ie_pre9()){
+    elgg_load_js('au_analytics/jqplot/canvas');
+  }
+
+  // get our css/js
+  elgg_load_css('au_analytics/jqplot');
+  elgg_load_js('au_analytics/jqplot');
+  elgg_load_js('au_analytics/jqplot/highlighter');
+  elgg_load_js('au_analytics/jqplot/cursor');
+  elgg_load_js('au_analytics/jqplot/dateaxis');
+  elgg_load_js('au_analytics/jqplot/barRender');
+  elgg_load_js('au_analytics/jqplot/categoryAxis');
+  elgg_load_js('au_analytics/jqplot/pointLabels');
+  elgg_load_js('au_analytics/jqplot/canvasAxisLabel');
+  elgg_load_js('au_analytics/jqplot/canvasText');
+
   $line = au_analytics_get_timeline($options, $group, $cumulative, $interval);
   
   $message = '';

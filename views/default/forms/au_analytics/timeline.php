@@ -126,5 +126,20 @@ echo elgg_view('input/text', array('name' => 'interval', 'value' => get_input('i
 echo '</div>';
 
 
+// setup display type
+$options = array(
+    'name' => 'display',
+    'value' => get_input('display', 'graph'),
+    'options_values' => array(
+        'graph' => elgg_echo('au_analytics:option:display:graph'),
+        'data' => elgg_echo('au_analytics:option:display:table')
+    )
+);
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:display') . "<br>";
+echo elgg_view('input/dropdown', $options);
+echo '</div>';
+
+
 echo "<br><br>";
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit')));
