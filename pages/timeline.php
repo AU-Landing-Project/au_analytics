@@ -124,7 +124,8 @@ $(document).ready(function(){
 
 <div id="au_analytics_timeline" style="width:600px; height:400px;">{$message}</div>
 END;
-// set up selection for subtypes
+
+$graph .= "<br>" . elgg_echo('au_analytics:graph:instructions');
           
 
   $html .= $graph;

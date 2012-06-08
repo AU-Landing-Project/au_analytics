@@ -1,5 +1,7 @@
 <?php
 
+echo elgg_echo('au_analytics:form:timeline:notice') . "<br><br>";
+
 // get all subtypes in the database, not just the public facing ones
 $result = get_data("SELECT subtype FROM " . elgg_get_config('dbprefix') . "entity_subtypes");
 $subtypes = array();
