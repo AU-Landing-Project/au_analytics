@@ -29,6 +29,10 @@ $english = array(
     'au_analytics:timeline' => "AU Timeline",
     'au_analytics:timestamp' => "Interval Start",
     'au_analytics:type:subtype' => "Type:Subtype",
+    
+    // timeline
+    
+    'admin:statistics:timeline' => 'AU Timeline',
 );
 					
 add_translation("en",$english);

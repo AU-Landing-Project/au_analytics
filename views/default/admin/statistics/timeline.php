@@ -1,12 +1,5 @@
 <?php
 
-admin_gatekeeper();
-
-/*
- * Generates timeline graphs based on input parameters
- */
-
-
 // generate our form
 $html = elgg_view_form('au_analytics/timeline', array('action' => current_page_url()));
 
@@ -171,6 +164,4 @@ HTML;
 
 }
 
-$body = elgg_view_layout('one_sidebar', array('content' => $html));
-
-echo elgg_view_page('', $body);
+echo $html;
