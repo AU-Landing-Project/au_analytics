@@ -7,12 +7,16 @@
 
 // include our procedural functions
 require_once 'lib/functions.php';
+require_once 'lib/hooks.php';
 
 // plugin init
 function au_analytics_init(){
   
-  // set up css
+  // extend our views
 	elgg_extend_view('css/admin', 'au_analytics/css');
+  
+  
+  // register page-specific css
 	elgg_register_css('au_analytics/jqplot', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/jquery.jqplot.min.css');
   elgg_register_css('au_analytics/tablesorter', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/style.css');
 	
@@ -32,7 +36,16 @@ function au_analytics_init(){
   elgg_register_js('au_analytics/tablesorter/pager', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/jquery.tablesorter.pager.js', 'head');
 
   
-  elgg_register_admin_menu_item('administer', 'timeline', 'statistics', 0);
+  // navigation
+  elgg_register_admin_menu_item('administer', 'au_pageview', 'statistics', 0);
+  elgg_register_admin_menu_item('administer', 'au_timeline', 'statistics', 0);
+  
+  
+  /*
+   *  plugin hooks
+   */
+  // log page views
+  elgg_register_plugin_hook_handler('output:before', 'page', 'au_analytics_pageview');
 }
 
 elgg_register_event_handler('init', 'system', 'au_analytics_init');
