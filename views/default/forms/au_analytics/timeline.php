@@ -51,7 +51,7 @@ echo '</div>';
 // set up time lower/time upper
 // get minimum time (time of oldest entity)
 $result = get_data('SELECT MIN(time_created) as time_created FROM ' . elgg_get_config('dbprefix') . 'entities');
-$time_lowest = $result[0]->time_created;
+$time_lowest = max(array($result[0]->time_created, strtotime('-6 months')));
 
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:time_lower') . "<br>";
