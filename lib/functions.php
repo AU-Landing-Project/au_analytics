@@ -171,3 +171,32 @@ function au_analytics_get_timeline($options = array(), $group = FALSE, $cumulati
   
   return $jsline;
 }
+
+
+function au_analytics_load_graph_js() {
+  // IE versions < 9 need special js
+  if(au_analytics_check_ie_pre9()){
+    elgg_load_js('au_analytics/jqplot/canvas');
+  }
+
+  /*
+   *  get our css/js
+   */
+  
+  // jqplot
+  elgg_load_css('au_analytics/jqplot');
+  elgg_load_js('au_analytics/jqplot');
+  elgg_load_js('au_analytics/jqplot/highlighter');
+  elgg_load_js('au_analytics/jqplot/cursor');
+  elgg_load_js('au_analytics/jqplot/dateaxis');
+  elgg_load_js('au_analytics/jqplot/barRender');
+  elgg_load_js('au_analytics/jqplot/categoryAxis');
+  elgg_load_js('au_analytics/jqplot/pointLabels');
+  elgg_load_js('au_analytics/jqplot/canvasAxisLabel');
+  elgg_load_js('au_analytics/jqplot/canvasText');
+  
+  // tablesorter
+  elgg_load_css('au_analytics/tablesorter');
+  elgg_load_js('au_analytics/tablesorter');
+  elgg_load_js('au_analytics/tablesorter/pager');
+}

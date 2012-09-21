@@ -17,6 +17,7 @@ $english = array(
     'au_analytics:no_results' => "No results for the selected options.",
     'au_analytics:timestamp' => "Interval Start",
     'au_analytics:type:subtype' => "Type:Subtype",
+    'au_analytics:not_logged_in_user' => "Non-Logged in user",
     
     // timeline
     'admin:statistics:au_timeline' => 'AU Timeline',
@@ -35,8 +36,16 @@ $english = array(
     
     // pageview
     'admin:statistics:au_pageview' => 'AU Page Views',
-    'au_analytics:pageview:userpicker' => 'Select one or more users, selecting no users will return everyone',
-    'au_analytics:pageview:url' => 'Enter a URL to limit to views of that page'
+    'au_analytics:pageview:userpicker' => 'Limit to specific users',
+    'au_analytics:pageview:url' => 'Enter a URL to limit to views of that page',
+    'au_analytics:label:pageview:viewtype' => 'Select the type of view',
+    'au_analytics:option:pageview:timeline_table' => 'Chonological Table',
+    'au_analytics:option:pageview:summary_table' => 'Summary Table',
+    'au_analytics:pageview:header:url' => 'Page Viewed',
+    'au_analytics:pageview:header:timestamp' => 'Timestamp',
+    'au_analytics:pageview:header:humandate' => 'Date/Time',
+    'au_analytics:pageview:header:user' => 'User',
+    'au_analytics:pageview:header:viewcount' => 'View Count'
 );
 					
 add_translation("en",$english);
