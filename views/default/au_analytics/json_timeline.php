@@ -1,3 +1,0 @@
-<?php
-
-$options = $vars['options'];

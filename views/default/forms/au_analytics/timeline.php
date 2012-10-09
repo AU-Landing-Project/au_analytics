@@ -19,7 +19,7 @@ sort($types);
 $value = get_input('types', array());
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:types') . "<br>";
-echo '<select name="types[]" multiple="multiple">';
+echo '<select name="types[]" multiple="multiple" id="timeline-types">';
 foreach($types as $type){
   $selected = '';
   if(in_array($type, $value)){
@@ -36,7 +36,7 @@ $value = get_input('subtypes', array());
 
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:subtypes') . "<br>";
-echo "<select name=\"subtypes[]\" multiple=\"multiple\">";
+echo "<select name=\"subtypes[]\" multiple=\"multiple\" id=\"timeline-subtypes\">";
 foreach($subtypes as $subtype){
   $selected = '';
   if(in_array($subtype, $value)){
@@ -66,6 +66,7 @@ echo '</div>';
 $options = array(
     'name' => 'access',
     'value' => get_input('access', 'any'),
+    'id' => 'timeline-access',
     'options_values' => array(
         'any' => elgg_echo('au_analytics:access:any'),
         ACCESS_PRIVATE => elgg_echo('PRIVATE'),
@@ -91,6 +92,7 @@ echo '</div>';
 $options = array(
     'name' => 'group',
     'value' => get_input('group', 0),
+    'id' => 'timeline-group',
     'options_values' => array(
         TRUE => elgg_echo('au_analytics:option:group_results:true'),
         FALSE => elgg_echo('au_analytics:option:group_results:false')
@@ -107,6 +109,7 @@ echo '</div>';
 $options = array(
     'name' => 'cumulative',
     'value' => get_input('cumulative', TRUE),
+    'id' => 'timeline-cumulative',
     'options_values' => array(
         TRUE => elgg_echo('au_analytics:option:cumulative:true'),
         FALSE => elgg_echo('au_analytics:option:cumulative:false')
@@ -122,7 +125,7 @@ echo '</div>';
 // setup sample interval
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:interval') . "<br>";
-echo elgg_view('input/text', array('name' => 'interval', 'value' => get_input('interval', 7), 'style' => 'width:150px'));
+echo elgg_view('input/text', array('name' => 'interval', 'value' => get_input('interval', 7), 'style' => 'width:150px', 'id' => 'timeline-interval'));
 echo '</div>';
 
 
@@ -130,6 +133,7 @@ echo '</div>';
 $options = array(
     'name' => 'display',
     'value' => get_input('display', 'graph'),
+    'id' => 'timeline-display',
     'options_values' => array(
         'graph' => elgg_echo('au_analytics:option:display:graph'),
         'data' => elgg_echo('au_analytics:option:display:table')
@@ -142,4 +146,4 @@ echo '</div>';
 
 
 echo "<br><br>";
-echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit'))) . "<br><br>";
+echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('Submit'), 'id' => 'timeline-submit')) . "<br><br>";

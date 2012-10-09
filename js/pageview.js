@@ -9,6 +9,7 @@ $(document).ready( function() {
   $('#pageview-submit').live('click', function(event) {
     event.preventDefault();
     $('#pageview-throbber').removeClass('hidden');
+    $('#pageview-results').html('');
     
     var members = [];
     $("input:hidden[name='members[]']").each( function() {

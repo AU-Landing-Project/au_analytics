@@ -4,8 +4,13 @@ au_analytics_load_graph_js();
 elgg_load_js('au_analytics/timeline');
 
 // generate our form
-$html = elgg_view_form('au_analytics/timeline', array('action' => current_page_url()));
+echo elgg_view_form('au_analytics/timeline', array('action' => current_page_url()));
 
+echo '<br><br>';
+echo elgg_view('graphics/ajax_loader', array('id' => 'timeline-throbber'));
+echo '<div id="timeline-results"></div>';
+
+/*
 // get our data formatting options
 $group = get_input('group', FALSE);
 $cumulative = get_input('cumulative', TRUE);
@@ -150,3 +155,5 @@ HTML;
 }
 
 echo $html;
+ 
+ */

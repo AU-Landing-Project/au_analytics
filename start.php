@@ -16,6 +16,7 @@ function au_analytics_init(){
   // extend our views
 	elgg_extend_view('css/admin', 'au_analytics/css');
   elgg_register_ajax_view('au_analytics/results/pageview');
+  elgg_register_ajax_view('au_analytics/results/timeline');
   
   // register page-specific css
 	elgg_register_css('au_analytics/jqplot', elgg_get_site_url() . 'mod/au_analytics/js/jqplot/jquery.jqplot.min.css');
