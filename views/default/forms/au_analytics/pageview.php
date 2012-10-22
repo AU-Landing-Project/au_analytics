@@ -24,10 +24,10 @@ $time_lowest = max(array($result[0]->time_created, strtotime('-6 months')));
 
 echo '<div class="au_analytics_formelement">';
 echo elgg_echo('au_analytics:label:time_lower') . "<br>";
-echo elgg_view('input/date', array('name' => 'created_time_lower', 'value' => $time_lowest, 'timestamp' => TRUE, 'id' => 'pageview-time-lower', 'style' => 'width: 120px;')) . "<br>";
+echo elgg_view('input/date', array('name' => 'created_time_lower', 'value' => $time_lowest, 'timestamp' => TRUE, 'style' => 'width: 120px;')) . "<br>";
 
 echo elgg_echo('au_analytics:label:time_upper') . "<br>";
-echo elgg_view('input/date', array('name' => 'created_time_upper', 'value' => time(), 'timestamp' => TRUE, 'id' => 'pageview-time-upper', 'style' => 'width: 120px;'));
+echo elgg_view('input/date', array('name' => 'created_time_upper', 'value' => time(), 'timestamp' => TRUE, 'style' => 'width: 120px;'));
 echo '</div>';
 
 
