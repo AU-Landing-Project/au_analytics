@@ -15,11 +15,21 @@ $(document).ready( function() {
     $("input:hidden[name='members[]']").each( function() {
       members.push($(this).val());
     });
+    
+    var types = '';
+    if ($('#timeline-types').val()) {
+      types = $('#timeline-types').val();
+    }
+    
+    var subtypes = '';
+    if ($('#timeline-subtypes').val()) {
+      subtypes = $('#timeline-subtypes').val();
+    }
      
     elgg.get('ajax/view/au_analytics/results/timeline', {
       data: {
-        types: $('#timeline-types').val(),
-        subtypes: $('#timeline-subtypes').val(),
+        types: types,
+        subtypes: subtypes,
         group: $('#timeline-group').val(),
         cumulative: $('#timeline-cumulative').val(),
         interval: $('#timeline-interval').val(),
