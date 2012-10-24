@@ -18,6 +18,7 @@ $english = array(
     'au_analytics:timestamp' => "Interval Start",
     'au_analytics:type:subtype' => "Type:Subtype",
     'au_analytics:not_logged_in_user' => "Non-Logged in user",
+    'au_analytics:waiting' => 'Loading... (this may take a while if there are lots of results)',
     
     // timeline
     'admin:statistics:au_timeline' => 'AU Timeline',

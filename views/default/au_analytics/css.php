@@ -7,3 +7,7 @@
 .au_analytics_formelement select {
   min-width: 120px;
 }
+
+#timeline-throbber, #pageview-throbber {
+  text-align: center;
+}
