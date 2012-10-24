@@ -27,6 +27,7 @@ $(document).ready( function() {
     }
      
     elgg.get('ajax/view/au_analytics/results/timeline', {
+      timeout: 600000, //10 min
       data: {
         types: types,
         subtypes: subtypes,
@@ -42,6 +43,12 @@ $(document).ready( function() {
       success: function(result, success, xhr){
         $('#timeline-results').html(result);
         $('#timeline-throbber').addClass('hidden');
+      },
+      error: function(result, response, xhr) {
+        if (response == 'timeout') {
+          $('#timeline-throbber').addClass('hidden');
+          $('#timeline-results').html(elgg.echo('au_analytics:timout'));
+        }
       }
     })
   });

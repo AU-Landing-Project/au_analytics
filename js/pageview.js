@@ -17,6 +17,7 @@ $(document).ready( function() {
     });
      
     elgg.get('ajax/view/au_analytics/results/pageview', {
+      timeout: 600000, //10 min
       data: {
         viewtype: $('#pageview-viewtype').val(),
         pageview_url: $('#pageview-url').val(),
@@ -27,6 +28,12 @@ $(document).ready( function() {
       success: function(result, success, xhr){
         $('#pageview-results').html(result);
         $('#pageview-throbber').addClass('hidden');
+      },
+      error: function(result, response, xhr) {
+        if (response == 'timeout') {
+          $('#pageview-throbber').addClass('hidden');
+          $('#pageview-results').html(elgg.echo('au_analytics:timout'));
+        }
       }
     });
   });
@@ -51,6 +58,7 @@ $(document).ready( function() {
     $('#pageview-results').html('');
     
     elgg.get('ajax/view/au_analytics/results/pageview', {
+      timeout: 600000, //10 min
       data: {
         viewtype: viewtype,
         pageview_url: pageview_url,
@@ -62,6 +70,12 @@ $(document).ready( function() {
       success: function(result, success, xhr){
         $('#pageview-results').html(result);
         $('#pageview-throbber').addClass('hidden');
+      },
+      error: function(result, response, xhr) {
+        if (response == 'timeout') {
+          $('#pageview-throbber').addClass('hidden');
+          $('#pageview-results').html(elgg.echo('au_analytics:timout'));
+        }
       }
     });
     

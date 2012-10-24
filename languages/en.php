@@ -18,7 +18,8 @@ $english = array(
     'au_analytics:timestamp' => "Interval Start",
     'au_analytics:type:subtype' => "Type:Subtype",
     'au_analytics:not_logged_in_user' => "Non-Logged in user",
-    'au_analytics:waiting' => 'Loading... (this may take a while if there are lots of results)',
+    'au_analytics:waiting' => 'Loading... (this could take up to 10 min for VERY large sets of results)',
+    'au_analytics:timout' => 'Results have not finished being computed after 10 minutes.  Please try to refine your requirements to return a smaller results set.',
     
     // timeline
     'admin:statistics:au_timeline' => 'AU Timeline',

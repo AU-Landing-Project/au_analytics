@@ -9,6 +9,7 @@ x.x:
  - Organized language strings better in preparation for new sections
  - Moved timeline and pageview output to ajax loaded content
  - batch processing timeline data and most pageview data to minimize OOM errors
+ - added 10 min timeout on processing requests, no more wondering if that spinner means anything :)
 
 
 0.3 (06/08/2012):
