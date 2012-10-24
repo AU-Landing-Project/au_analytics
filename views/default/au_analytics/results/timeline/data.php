@@ -1,45 +1,104 @@
 <?php
 
-$group = elgg_extract('group', $vars, false);
-$cumulative = elgg_extract('cumulative', $vars, true);
-$interval = (int) elgg_extract('interval', $vars, 7);
-
 // format our options
-$options = array();
-$options['types'] = $vars['types'];
-$options['subtypes'] = $vars['subtypes'];
-$options['owner_guids'] = elgg_extract('members', $vars, NULL);
-$options['created_time_lower'] = elgg_extract('time_lower', $vars, false);
-$options['created_time_upper'] = elgg_extract('time_upper', $vars, false);
-$options['au_analytics_display'] = 'data';
+$options = array(
+    'types' => $vars['types'],
+    'subtypes' => $vars['subtypes'],
+    'owner_guids' => $vars['members'],
+    'created_time_lower' => $vars['time_lower'],
+    'created_time_upper' => $vars['time_upper'],
+    'reverse_order_by' => TRUE,
+    'callback' => NULL,
+    'limit'  => 0,
+    'au_analytics' => array(
+      'group' => $vars['group'],
+      'cumulative' => $vars['cumulative'],
+      'interval' => $vars['interval']
+    )
+);
 
-$access = elgg_extract('access', $vars, 'any');
-if($access != 'any'){
-  $access = sanitize_int($access);
+//echo "<pre>" . print_r($options, 1) . "</pre>"; return;
+if($vars['access'] != 'any'){
+  $access = sanitize_int($vars['access']);
   $options['wheres'] = array("e.access_id = {$access}");
 }
 
-// get entities by time asc
-$options['reverse_order_by'] = TRUE;
+//
+//
+// generate our line
+global $TIMELINE_LINE, $TIMELINE_SECTION, $TIMELINE_X;
 
-// don't need the entity objects, waste of processing power
-$options['callback'] = NULL;
-
-// get all results
-$options['limit'] = 0;
-
-$line = au_analytics_get_timeline($options, $group, $cumulative, $interval);
-  
-$message = '';
-if(!$line){
-  $message = elgg_echo('au_analytics:no_results');
+if (!$TIMELINE_SECTION) {
+    $TIMELINE_SECTION = 60*60*24*$options['au_analytics']['interval'];
 }
 
-// output the table
+// determine x values as line keys
+$TIMELINE_X = array();
+$i = $options['created_time_lower'];
+while ($i < ($options['created_time_upper'] + $TIMELINE_SECTION)) {
+  $TIMELINE_X[] = $i;
+  $i += $TIMELINE_SECTION;
+}
+//echo "<pre>" . print_r($TIMELINE_X,1) . "</pre>";
+
+// loop over each x value and query for the y coordinate of each line type
+foreach ($TIMELINE_X as $key => $x) {
+  $options_tmp = $options;
+  $options_tmp['created_time_lower'] = ($key == 0) ? NULL : $TIMELINE_X[$key - 1];
+  $options_tmp['created_time_upper'] = $x;
+  $options_tmp['au_analytics']['x_value'] = $x;
+  $options_tmp['au_analytics']['previous_x'] = $options_tmp['created_time_lower'];
+  $batch = new ElggBatch('elgg_get_entities', $options_tmp, 'au_analytics_timeline_graph_line', 50);
+}
+
+
+// now we have all of our lines, though not all of them will extend to the end of the graph
+// make see if we have any lines to display, if not, short circuit
+if (!$TIMELINE_LINE) {
+  echo elgg_echo('au_analytics:no_results');
+  return;
+}
+
+  // if an entity was counted and removed from the array, and there were no more to the end of the iterations
+  // so now we'll normalize them with our x values
+  foreach($TIMELINE_LINE as $name => $values){    
+    foreach($TIMELINE_X as $key => $x){
+      if (!isset($TIMELINE_LINE[$name][$x])) {
+        $TIMELINE_LINE[$name][$x] = 0;
+      }
+      
+        if($vars['cumulative']){
+          if ($key == 0) {
+            // this is the first value we need to query to find previous sums
+            $options_mod = $options;
+            $options_mod['created_time_lower'] = NULL;
+            $options_mod['created_time_upper'] = $x;
+            $options_mod['count'] = true;
+            
+            if (!$vars['group']) {
+              $type_subtype = explode(':', $name);
+              if ($type_subtype[0]) {
+                $options_mod['types'] = array($type_subtype[0]);
+              }
+              
+              if ($type_subtype[1]) {
+                $options_mod['subtypes'] = array($type_subtype[1]);
+              }
+            }
+            $previous_count = elgg_get_entities($options_mod);
+            $TIMELINE_LINE[$name][$x] += $previous_count;
+          }
+          else {
+            // set it to the value of the previous x
+            $TIMELINE_LINE[$name][$x] += $TIMELINE_LINE[$name][$TIMELINE_X[$key - 1]];
+          }
+        }
+    }
+    ksort($TIMELINE_LINE[$name]);
+  }
+  //echo "<pre>" . print_r($TIMELINE_LINE,1) . "</pre>";
   
-  $data = au_analytics_get_timeline($options, $group, $cumulative, $interval);
-  
-  //format data into a table
+//format data into a table
   
   $html .= '<table id="au_analytics_timeline_table" class="tablesorter">';
   $html .= '<thead><tr>';
@@ -49,7 +108,7 @@ if(!$line){
   $html .= '</tr></thead>';
   $html .= '<tbody>';
   
-  foreach($data as $type_subtype => $values){
+  foreach($TIMELINE_LINE as $type_subtype => $values){
     foreach($values as $timestamp => $num){
       $html .= '<tr><td>' . date('Y-m-j', $timestamp) . '</td>';
       $html .= '<td>' . $type_subtype . '</td>';
