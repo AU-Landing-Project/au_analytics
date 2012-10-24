@@ -135,38 +135,7 @@ if (!$TIMELINE_LINE) {
   $jsline['titles'] .= "]";
   $jsline['data'] .= "]";
   
-//echo "<pre>" . print_r($TIMELINE_LINE,1) . "</pre>";
-/*
-$group = elgg_extract('group', $vars, false);
-$cumulative = elgg_extract('cumulative', $vars, true);
-$interval = (int) elgg_extract('interval', $vars, 7);
 
-// format our options
-$options = array();
-$options['types'] = $vars['types'];
-$options['subtypes'] = $vars['subtypes'];
-$options['owner_guids'] = elgg_extract('members', $vars, NULL);
-$options['created_time_lower'] = elgg_extract('time_lower', $vars, false);
-$options['created_time_upper'] = elgg_extract('time_upper', $vars, false);
-$options['au_analytics_display'] = 'graph';
-
-$access = elgg_extract('access', $vars, 'any');
-if($access != 'any'){
-  $access = sanitize_int($access);
-  $options['wheres'] = array("e.access_id = {$access}");
-}
-
-// get entities by time asc
-$options['reverse_order_by'] = TRUE;
-
-// don't need the entity objects, waste of processing power
-$options['callback'] = NULL;
-
-// get all results
-$options['limit'] = 0;
-
-$line = au_analytics_get_timeline($options, $group, $cumulative, $interval);
-*/
   
 $instructions = elgg_echo('au_analytics:graph:instructions');
 
