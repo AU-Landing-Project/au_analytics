@@ -64,11 +64,9 @@ function au_analytics_timeline_graph_line($result, $getter, $options) {
   }
 
   $group = $options['au_analytics']['group'];
-  $cumulative = $options['au_analytics']['cumulative'];
   $subtype = $subtypes[$result->subtype];
   $type = $result->type;
   $x_value = $options['au_analytics']['x_value'];
-  $previous_x = $options['au_analytics']['previous_x'];
   
   if (!is_array($TIMELINE_LINE)) {
     $TIMELINE_LINE = array();
@@ -84,49 +82,6 @@ function au_analytics_timeline_graph_line($result, $getter, $options) {
   else{
     $line_name = "{$type}:{$subtype}";
   }
-  
-  
-  // get first point if line not initiated yet
-  // first point for this line at this time
-  // initialize the point with either 0, or cumulative value
-  /*
-  if(!isset($TIMELINE_LINE[$line_name][$x_value])){
-    if($cumulative){
-      if($TIMELINE_LINE[$line_name][$previous_x] === NULL){
-        // this is the first point for the line total, need to query db to get previous sum
-        if($group){
-          // we're grouping everything together, so we can sum the initial query with some modifications
-          $value = elgg_get_entities(array_merge($options, array('count' => TRUE, 'created_time_lower' => NULL, 'created_time_upper' => $options['created_time_lower'])));
-        }
-        else{
-          $options_mod = array(
-              'count' => TRUE,
-              'created_time_lower' => NULL,
-              'created_time_upper' => $options['created_time_lower'],
-          );
-              
-          if($type){
-            $options_mod['types'] = array($type);
-          }
-              
-          if($subtype){
-            $options_mod['subtypes'] = array($subtype);
-          }
-              
-          $value = elgg_get_entities(array_merge($options, $options_mod));
-        }
-      }
-      else{
-        $value = $TIMELINE_LINE[$line_name][$previous_x];
-      }
-    }
-    else{
-      $value = 0;
-    }
-    $TIMELINE_LINE[$line_name][$x_value] = $value;
-  }
-   * 
-   */
   
   $TIMELINE_LINE[$line_name][$x_value]++;
 }

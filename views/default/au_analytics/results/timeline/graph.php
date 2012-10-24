@@ -68,27 +68,7 @@ if (!$TIMELINE_LINE) {
       }
       
         if($vars['cumulative']){
-          if ($key == 0) {
-            // this is the first value we need to query to find previous sums
-            $options_mod = $options;
-            $options_mod['created_time_lower'] = NULL;
-            $options_mod['created_time_upper'] = $x;
-            $options_mod['count'] = true;
-            
-            if (!$vars['group']) {
-              $type_subtype = explode(':', $name);
-              if ($type_subtype[0]) {
-                $options_mod['types'] = array($type_subtype[0]);
-              }
-              
-              if ($type_subtype[1]) {
-                $options_mod['subtypes'] = array($type_subtype[1]);
-              }
-            }
-            $previous_count = elgg_get_entities($options_mod);
-            $TIMELINE_LINE[$name][$x] += $previous_count;
-          }
-          else {
+          if ($key != 0) {
             // set it to the value of the previous x
             $TIMELINE_LINE[$name][$x] += $TIMELINE_LINE[$name][$TIMELINE_X[$key - 1]];
           }
