@@ -19,7 +19,7 @@ $english = array(
     'au_analytics:type:subtype' => "Type:Subtype",
     'au_analytics:not_logged_in_user' => "Non-Logged in user",
     'au_analytics:waiting' => 'Loading... (this could take up to 10 min for VERY large sets of results)',
-    'au_analytics:timout' => 'Results have not finished being computed after 10 minutes.  Please try to refine your requirements to return a smaller results set.',
+    'au_analytics:timeout' => 'Results have not finished being computed after 10 minutes.  Please try to refine your requirements to return a smaller results set.',
     
     // timeline
     'admin:statistics:au_timeline' => 'AU Timeline',
@@ -35,8 +35,10 @@ $english = array(
     'au_analytics:option:group_results:false' => "Use separate lines for each type/subtype",
     'au_analytics:option:group_results:true' => "Group all results into a single combined line",
     'au_analytics:timeline' => "AU Timeline",
+	'au_analytics:label:annotations' => "Annotations",
     
     // pageview
+	'au_analytics:log:pages' => "Log page views?",
     'admin:statistics:au_pageview' => 'AU Page Views',
     'au_analytics:pageview:userpicker' => 'Limit to specific users',
     'au_analytics:pageview:url' => 'Enter a URL to limit to views of that page',

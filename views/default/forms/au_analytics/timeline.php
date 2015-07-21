@@ -1,5 +1,7 @@
 <?php
 
+$dbprefix = elgg_get_config('dbprefix');
+
 echo elgg_echo('au_analytics:form:timeline:notice') . "<br><br>";
 
 // get all subtypes in the database, not just the public facing ones
@@ -43,6 +45,28 @@ foreach($subtypes as $subtype){
     $selected = ' selected="selected"';
   }
   echo "<option value=\"{$subtype}\"{$selected}>{$subtype}</option>";
+}
+echo "</select>";
+echo '</div>';
+
+// setup selection for annotations
+$value = get_input('annotations', array());
+$results = get_data("SELECT DISTINCT a.name_id, ms.string FROM {$dbprefix}annotations a JOIN {$dbprefix}metastrings ms ON a.name_id = ms.id ORDER BY ms.string ASC");
+$annotations = array();
+foreach ($results as $r) {
+	$annotations[$r->name_id] = $r->string;
+}
+
+
+echo '<div class="au_analytics_formelement">';
+echo elgg_echo('au_analytics:label:annotations') . "<br>";
+echo "<select name=\"annotations[]\" multiple=\"multiple\" id=\"timeline-annotations\">";
+foreach($annotations as $id => $annotation){
+  $selected = '';
+  if(in_array($subtype, $value)){
+    $selected = ' selected="selected"';
+  }
+  echo "<option value=\"{$annotation}\"{$selected}>{$annotation}</option>";
 }
 echo "</select>";
 echo '</div>';

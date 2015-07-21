@@ -25,12 +25,18 @@ $(document).ready( function() {
     if ($('#timeline-subtypes').val()) {
       subtypes = $('#timeline-subtypes').val();
     }
+    
+    var annotations = '';
+    if ($('#timeline-annotations').val()) {
+        annotations = $('#timeline-annotations').val();
+    }
      
     elgg.get('ajax/view/au_analytics/results/timeline', {
       timeout: 600000, //10 min
       data: {
         types: types,
         subtypes: subtypes,
+        annotations: annotations,
         group: $('#timeline-group').val(),
         cumulative: $('#timeline-cumulative').val(),
         interval: $('#timeline-interval').val(),
@@ -47,7 +53,7 @@ $(document).ready( function() {
       error: function(result, response, xhr) {
         if (response == 'timeout') {
           $('#timeline-throbber').addClass('hidden');
-          $('#timeline-results').html(elgg.echo('au_analytics:timout'));
+          $('#timeline-results').html(elgg.echo('au_analytics:timeout'));
         }
       }
     })

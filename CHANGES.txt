@@ -2,6 +2,10 @@
 
 x.x:
 
+0.5 ():
+ - fix sending results for *everything* when no options selected
+ - add support for graphing annotations
+
 0.4 ():
  - Moved timeline back into admin context (requires Elgg 1.8.7)
  - Set default start date to 6 months ago, or site creation date if site is less than 6 months old
