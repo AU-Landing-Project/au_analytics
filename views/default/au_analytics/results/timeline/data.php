@@ -42,7 +42,7 @@ while ($i < ($options['created_time_upper'] + $TIMELINE_SECTION)) {
 //echo "<pre>" . print_r($TIMELINE_X,1) . "</pre>";
 // loop over each x value and query for the y coordinate of each line type
 foreach ($TIMELINE_X as $key => $x) {
-	if ($vars['type']) {
+	if ($vars['types']) {
 		$options_tmp = $options;
 		$options_tmp['created_time_lower'] = ($key == 0) ? NULL : $TIMELINE_X[$key - 1];
 		$options_tmp['created_time_upper'] = $x;
