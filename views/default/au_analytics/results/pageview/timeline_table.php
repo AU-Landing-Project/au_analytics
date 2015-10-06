@@ -1,5 +1,7 @@
 <?php
 
+namespace AU\Analytics;
+
 set_time_limit(0); // we could be at this a while
 
 // we're only allowing admins to do stats at the moment
@@ -63,7 +65,7 @@ echo '<th>' . elgg_echo('au_analytics:pageview:header:humandate') . '</th>';
 echo '</tr></thead>';
 echo '<tbody>';
 
-$batch = new ElggBatch('elgg_get_annotations', $options, 'au_analytics_output_pageview_timeline_table', 50);
+$batch = new \ElggBatch('elgg_get_annotations', $options, __NAMESPACE__ . '\\output_pageview_timeline_table', 50);
 
 echo '</tbody></table>';
   

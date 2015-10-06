@@ -1,5 +1,4 @@
-au_analytics
-============
+# AU Analytics
 
 Provides graphical analysis of Elgg content
 

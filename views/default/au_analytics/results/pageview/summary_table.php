@@ -1,5 +1,7 @@
 <?php
 
+namespace AU\Analytics;
+
 set_time_limit(0); // we could be at this a while
 
 // we're only allowing admins to do stats at the moment
@@ -39,7 +41,7 @@ echo '<tbody>';
 // pagination stuff
 // need to count unique values within our parameters
 
-$batch = new ElggBatch('elgg_get_annotations', $options, 'au_analytics_output_pageview_summary_table', 50);
+$batch = new \ElggBatch('elgg_get_annotations', $options, __NAMESPACE__ . '\\output_pageview_summary_table', 50);
 
 global $PAGEVIEW_SUMMARY;
 foreach ($PAGEVIEW_SUMMARY as $url => $count) {

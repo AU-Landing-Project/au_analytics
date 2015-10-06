@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
     'au_analytics' => "AU Analytics",
     'au_analytics:access:any' => "Any",
     'au_analytics:access:friends' => "Friends",
@@ -51,5 +51,3 @@ $english = array(
     'au_analytics:pageview:header:user' => 'User',
     'au_analytics:pageview:header:viewcount' => 'View Count'
 );
-					
-add_translation("en",$english);

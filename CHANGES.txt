@@ -2,6 +2,9 @@
 
 x.x:
 
+1.0.0 ():
+ - upgrade for 1.9+
+
 0.5 ():
  - fix sending results for *everything* when no options selected
  - add support for graphing annotations

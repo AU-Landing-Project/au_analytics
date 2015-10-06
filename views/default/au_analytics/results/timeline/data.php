@@ -1,5 +1,7 @@
 <?php
 
+namespace AU\Analytics;
+
 // format our options
 $options = array(
 	'types' => $vars['types'],
@@ -48,7 +50,7 @@ foreach ($TIMELINE_X as $key => $x) {
 		$options_tmp['created_time_upper'] = $x;
 		$options_tmp['au_analytics']['x_value'] = $x;
 		$options_tmp['au_analytics']['previous_x'] = $options_tmp['created_time_lower'];
-		$batch = new ElggBatch('elgg_get_entities', $options_tmp, 'au_analytics_timeline_graph_line', 50);
+		$batch = new \ElggBatch('elgg_get_entities', $options_tmp, __NAMESPACE__ . '\\timeline_graph_line', 50);
 	}
 	
 	if ($vars['annotations']) {
@@ -72,7 +74,7 @@ foreach ($TIMELINE_X as $key => $x) {
 				"n_table.access_id = {$access}"
 			);
 		}
-		$batch = new ElggBatch('elgg_get_annotations', $annotation_options, 'au_analytics_timeline_annotation_graph_line', 50);
+		$batch = new \ElggBatch('elgg_get_annotations', $annotation_options, __NAMESPACE__ . '\\timeline_annotation_graph_line', 50);
 	}
 }
 

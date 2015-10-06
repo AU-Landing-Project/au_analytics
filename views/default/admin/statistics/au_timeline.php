@@ -1,7 +1,10 @@
 <?php
+
+namespace AU\Analytics;
+
 // make sure we have our js/css
-au_analytics_load_graph_js();
-elgg_load_js('au_analytics/timeline');
+load_graph_js();
+elgg_require_js('au_analytics/timeline');
 
 // generate our form
 echo elgg_view_form('au_analytics/timeline', array('action' => current_page_url()));

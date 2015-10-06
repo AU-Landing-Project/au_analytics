@@ -18,7 +18,7 @@ echo '</div>';
 
 // set up time lower/time upper
 // get minimum time (time of oldest logged pageview)
-$id = get_metastring_id('au_analytics_page_view');
+$id = elgg_get_metastring_id('au_analytics_page_view');
 $result = get_data("SELECT MIN(time_created) as time_created FROM " . elgg_get_config('dbprefix') . "annotations WHERE name_id = " . $id);
 $time_lowest = max(array($result[0]->time_created, strtotime('-6 months')));
 
