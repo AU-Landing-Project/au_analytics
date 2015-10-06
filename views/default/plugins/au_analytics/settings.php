@@ -2,7 +2,7 @@
 
 $options = array(
     'name' => 'params[pagelog]',
-    'value' => $vars['entity']->pagelog,
+    'value' => $vars['entity']->pagelog ? $vars['entity']->pagelog : 'no',
     'options_values' => array(
         'yes' => elgg_echo('option:yes'),
         'no' => elgg_echo('option:no')

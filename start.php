@@ -113,16 +113,6 @@ function init() {
 	));
 	
 	
-	
-	//jqplot
-	/*
-	elgg_register_js('au_analytics/tablesorter', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/jquery.tablesorter.min.js', 'head');
-	 * 
-	 */
-
-	// tablesorter
-	//elgg_register_js('au_analytics/tablesorter/pager', elgg_get_site_url() . 'mod/au_analytics/js/tablesorter/jquery.tablesorter.pager.js', 'head');
-
 	// navigation
 	elgg_register_admin_menu_item('administer', 'au_pageview', 'statistics', 0);
 	elgg_register_admin_menu_item('administer', 'au_timeline', 'statistics', 0);
