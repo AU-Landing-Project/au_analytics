@@ -2,7 +2,7 @@
 
 x.x:
 
-1.0.0 ():
+1.0.0 (10/06/2015):
  - upgrade for 1.9+
  - record pageviews in separate table, don't pollute annotations
  - pageview recording off by default
