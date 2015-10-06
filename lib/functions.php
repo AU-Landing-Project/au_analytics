@@ -18,7 +18,6 @@ function check_ie_pre9() {
 	return false;
 }
 
-
 function load_graph_js() {
 	// IE versions < 9 need special js
 	if (check_ie_pre9()) {
@@ -26,27 +25,27 @@ function load_graph_js() {
 	}
 
 	/*
-	 *  get our css/js
+	 *  get our css
 	 */
 
 	// jqplot
 	elgg_load_css('au_analytics/jqplot');
 	elgg_load_css('au_analytics/tablesorter');
-	
-	/*
-	elgg_load_js('au_analytics/jqplot');
-	elgg_load_js('au_analytics/jqplot/highlighter');
-	elgg_load_js('au_analytics/jqplot/cursor');
-	elgg_load_js('au_analytics/jqplot/dateaxis');
-	elgg_load_js('au_analytics/jqplot/barRender');
-	elgg_load_js('au_analytics/jqplot/categoryAxis');
-	elgg_load_js('au_analytics/jqplot/pointLabels');
-	elgg_load_js('au_analytics/jqplot/canvasAxisLabel');
-	elgg_load_js('au_analytics/jqplot/canvasText');
+}
 
-	// tablesorter
-	elgg_load_js('au_analytics/tablesorter');
-	elgg_load_js('au_analytics/tablesorter/pager');
- * 
- */
+function install_pageview_table() {
+	$dbprefix = elgg_get_config('dbprefix');
+	$sql = "CREATE TABLE IF NOT EXISTS `{$dbprefix}au_analytics_pageviews` (
+  `guid` int(11) NOT NULL,
+  `scheme` tinytext NOT NULL,
+  `host` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `query` varchar(255) NOT NULL,
+  `timestamp` int(32) NOT NULL,
+  KEY `guid` (`guid`),
+  KEY `host` (`host`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+	
+	update_data($sql);
 }

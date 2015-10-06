@@ -11,6 +11,17 @@ function record_pageview($hook, $type, $return, $params) {
 		  $guid = elgg_get_logged_in_user_guid();
 	  }
 
-    create_annotation($guid, 'au_analytics_page_view', current_page_url());
+	$viewtype = elgg_get_viewtype();
+	if ($viewtype == 'default') {
+		$dbprefix = elgg_get_config('dbprefix');
+		$parts = parse_url(current_page_url());
+		$timestamp = time();
+		
+		$sql = "INSERT INTO {$dbprefix}au_analytics_pageviews"
+		. " (guid, scheme, host, path, query, timestamp)"
+		. " VALUES ({$guid}, '{$parts['scheme']}', '{$parts['host']}', '{$parts['path']}', '{$parts['query']}', {$timestamp})";
+		
+		insert_data($sql);
+	}
   } 
 }

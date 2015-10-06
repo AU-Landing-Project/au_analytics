@@ -4,6 +4,8 @@ x.x:
 
 1.0.0 ():
  - upgrade for 1.9+
+ - record pageviews in separate table, don't pollute annotations
+ - Note: this is a BC break for pageviews, old data will not show in the queries
 
 0.5 ():
  - fix sending results for *everything* when no options selected

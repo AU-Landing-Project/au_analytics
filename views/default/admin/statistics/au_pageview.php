@@ -1,7 +1,9 @@
 <?php
-elgg_load_js('au_analytics/pageview');
-elgg_load_js('au_analytics/tablesorter');
-elgg_load_css('au_analytics/tablesorter');
+
+namespace AU\Analytics;
+
+elgg_require_js('au_analytics/pageview');
+load_graph_js();
 
 echo elgg_view('forms/au_analytics/pageview');
 

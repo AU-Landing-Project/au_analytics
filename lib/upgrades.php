@@ -11,5 +11,7 @@ function upgrade20151005() {
 		return true;
 	}
 	
+	install_pageview_table();
+	
 	elgg_set_plugin_setting('version', 20151005, PLUGIN_ID);
 }
