@@ -4,6 +4,12 @@ namespace AU\Analytics;
 
 function record_pageview($hook, $type, $return, $params) {
 	$log_pageview = elgg_get_plugin_setting('pagelog', 'au_analytics');
+	
+	// prevent fatal errors on upgrading sites with pageview logging enabled
+	$version = elgg_get_plugin_setting('version', PLUGIN_ID);
+	if ($version < PLUGIN_VERSION) {
+		install_pageview_table();
+	}
 
 	if ($log_pageview == 'yes') {
 		$guid = elgg_get_site_entity()->guid;
